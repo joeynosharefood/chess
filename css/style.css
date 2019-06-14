@@ -1,0 +1,58 @@
+body{
+    background: azure;
+}
+#game-board{
+    position: relative;
+    top: 40px;
+    left: 25%;
+    padding: 5px;
+    border: 2px solid black;
+    width: 655px;
+    height: 650px;
+    left: right;
+    background: white;
+}
+.box {
+    border: 2px solid rgba(177, 135, 83, 0.452);
+    width: 80px;
+    height: 80px;
+    float: left;
+    text-align: center;
+}
+.br-1{
+    clear: left;
+}
+#menu{
+    position: relative;
+    top: -600px;
+    left: 1090px;
+    width: 400px;
+    height: 635px;
+    border: 2px solid black;
+    background: white;
+    float: left;
+}
+.dark{background:#B18753;}
+.light{background:#FFFFE8;}
+.button{
+    background-color: #555555;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    position: absolute;
+    bottom: 20px;
+    left: 40px;
+}
+.select-box{
+    position: relative;
+    top: 7px;
+}
+#turn{
+    position: relative;
+    top: -350px;
+    left: -140px;
+}
