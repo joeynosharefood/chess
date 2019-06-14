@@ -50,8 +50,9 @@ function init(){
     }
 }
 function config(){
-    let piece = 'pawnwhite'
-    dataEntry('e4', `${piece}`)
-    let img = `<img src='../img/${piece}.png' class ="${piece} e4"onclick="scanner('${piece}', 'e4')">`
-    document.getElementById('square-e4').innerHTML = img
+    let piece = 'knightwhite'
+    let position_test = 'a2'
+    dataEntry(`${position_test}`, `${piece}`)
+    let img = `<img src='../img/${piece}.png' class ="${piece} ${position_test}" onclick="scanner('${piece}', '${position_test}')">`
+    document.getElementById(`square-${position_test}`).innerHTML = img
 }

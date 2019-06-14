@@ -54,5 +54,25 @@ body{
 #turn{
     position: relative;
     top: -350px;
-    left: -140px;
+    left: -250px;
+}
+#indexLetter{
+    float: left;
+    position: relative;
+    top: -660px;
+    left: -70px;
+}
+.letter{
+    padding: 20px 20px;
+}
+#indexNumber{
+    position: absolute;
+    top: 10px;
+    left: 420px;
+    display: inline;
+}
+.number{
+    float: left;
+    clear: right;
+    width: 80px;
 }
