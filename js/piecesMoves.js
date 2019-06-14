@@ -19,7 +19,7 @@ function scanner(piece, pos){
                 move2: rows[index-2]+`${column}`
             }
             render_possibiltys(pawndark, piece, 'dark', pos)
-            break;
+            break;            
         default:
             break;
     } 
@@ -27,7 +27,7 @@ function scanner(piece, pos){
 function render_possibiltys(moves, piece, color, position){
     if (color == turn){
         for (let mov in moves){
-            let select_box = `<img src="../img/select-box.png" class='select-box' id="select-box" onclick="moviment('${moves[mov]}', '${piece}'); add_class_remove('${position}')">`
+            let select_box = `<img src="../img/select-box.png" class='select-box' id='select-box'onclick="moviment('${moves[mov]}', '${piece}'); add_class_remove('${position}')">`
             document.getElementById(`square-${moves[mov]}`).innerHTML = select_box
         }
     }else{
@@ -35,6 +35,7 @@ function render_possibiltys(moves, piece, color, position){
     }
 }
 function moviment(move, piece){
+    dataEntry(`${move}`, `${piece}`)
     let new_position = `<img src="../img/${piece}.png" class="${piece} ${move}" onclick="scanner('${piece}', '${move}')">`
     document.getElementById(`square-${move}`).innerHTML = new_position
     change_turn()
@@ -42,10 +43,13 @@ function moviment(move, piece){
 function change_turn(){
     turn = turn == 'white' ? 'dark': 'white'
     let img = document.querySelector('#turn')
-    img.src = `../img/${turn}.png`
-    document.getElementById('select-box').remove()
+    img.src = `../img/${turn}.png`   
 }
 function add_class_remove(position){
-    let element_for_remove = document.querySelector(`.${position}`)
-    element_for_remove.remove()
+    dataRemove(`${position}`)
+    $(`.${position}`).remove()
+    let body = document.querySelector('body')
+    for (let child in body){
+        $('.select-box').remove()
+    }
 }

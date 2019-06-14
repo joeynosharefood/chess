@@ -1,3 +1,4 @@
+configPieces = false
 var initPosition = {
     //black
     h1: 'rookdark',
@@ -38,8 +39,19 @@ var initPosition = {
     b8: 'pawnwhite',
 }
 function init(){
-    for (let pos in initPosition){
-        let img = `<img src="../img/${initPosition[pos]}.png" class="${initPosition[pos]} ${[pos]}" onclick="scanner('${initPosition[pos]}', '${pos}')">`
-        document.getElementById(`square-${pos}`).innerHTML = img
+    if  (configPieces == true){
+        config()
+    }else{
+        for (let pos in initPosition){
+            dataEntry(`${pos}`, `${initPosition[pos]}`)
+            let img = `<img src="../img/${initPosition[pos]}.png" class="${initPosition[pos]} ${[pos]}" onclick="scanner('${initPosition[pos]}', '${pos}')">`
+            document.getElementById(`square-${pos}`).innerHTML = img
+        }
     }
+}
+function config(){
+    let piece = 'pawnwhite'
+    dataEntry('e4', `${piece}`)
+    let img = `<img src='../img/${piece}.png' class ="${piece} e4"onclick="scanner('${piece}', 'e4')">`
+    document.getElementById('square-e4').innerHTML = img
 }

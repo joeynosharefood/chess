@@ -1,4 +1,4 @@
-const chessBoard = {
+var chessBoard = {
     h:[],
     g:[],
     f:[],
