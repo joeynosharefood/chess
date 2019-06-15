@@ -15,12 +15,8 @@ function piece_per_piece(piece, indexRow, indexColumn){
                 move1: `${rows[indexRow+1]}`+`${columns[indexColumn]}`,
                 move2: `${rows[indexRow+2]}`+`${columns[indexColumn]}`
             }
-            var position_test_pW = scan(move_pW)
-            if (is_empty(position_test_pW) == true){
-                return position_test_pW
-            }else{
-                console.log('false2')
-            }
+            let position_test_pW = scan(move_pW)
+            return position_test_pW
             break;
         case 'pawndark':
             let move_pB = {
@@ -28,11 +24,7 @@ function piece_per_piece(piece, indexRow, indexColumn){
                 move2: `${rows[indexRow-2]}`+`${columns[indexColumn]}`
             }
             let position_test_pB = scan(move_pB)
-            if (is_empty(position_test_pB) == true){
-                return position_test_pB
-            }else{
-                console.log('false2')
-            }
+            return position_test_pB
             break; 
         case 'knightwhite':
             let move_kW = {
@@ -49,31 +41,95 @@ function piece_per_piece(piece, indexRow, indexColumn){
             return position_test_kW
             break;
         case 'knightdark':
-            console.log(piece)
+            let move_kB = {
+                move1: `${rows[indexRow+2]}`+`${columns[indexColumn+1]}`,
+                move2: `${rows[indexRow+2]}`+`${columns[indexColumn-1]}`, 
+                move3: `${rows[indexRow-1]}`+`${columns[indexColumn+2]}`,
+                move4: `${rows[indexRow+1]}`+`${columns[indexColumn+2]}`,
+                move5: `${rows[indexRow-2]}`+`${columns[indexColumn+1]}`,
+                move6: `${rows[indexRow-2]}`+`${columns[indexColumn-1]}`,
+                move7: `${rows[indexRow-1]}`+`${columns[indexColumn-2]}`,
+                move8: `${rows[indexRow+1]}`+`${columns[indexColumn-2]}`
+            }
+            let position_test_kB = scan(move_kB)
+            return position_test_kB
             break;
         case 'bishopwhite':
-            console.log(piece)
+            let movebW = {
+                move3 :  move_axis_x(indexRow, indexColumn),
+                move4 :  move_axis_w(indexRow, indexColumn),
+                move5 :  move_axis_z(indexRow, indexColumn),
+                move6 :  move_axis_y(indexRow, indexColumn)}
+            bigger_Moves(movebW, 'bishopwhite', 'white', `${rows[indexRow]}${columns[indexColumn]}`)
             break;
         case 'bishopdark':
-            console.log(piece)
+            let movebB = {
+                move3 :  move_axis_x(indexRow, indexColumn),
+                move4 :  move_axis_w(indexRow, indexColumn),
+                move5 :  move_axis_z(indexRow, indexColumn),
+                move6 :  move_axis_y(indexRow, indexColumn)}
+            bigger_Moves(movebB, 'bishopdark', 'dark', `${rows[indexRow]}${columns[indexColumn]}`)
             break;    
         case 'rookwhite':
-            console.log(piece)
+            let moverW = {
+                move1 :  strainght_line(indexColumn),
+                move2 :  horizon_lines(indexRow),}
+            bigger_Moves(moverW, 'rookwhite', 'white', `${rows[indexRow]}${columns[indexColumn]}`)
             break;
         case 'rookdark':
-            console.log(piece)
+            console.log('1')
+            let moverB = {
+                move1 :  strainght_line(indexColumn),
+                move2 :  horizon_lines(indexRow),}
+            bigger_Moves(moverB, 'rookdark', 'dark', `${rows[indexRow]}${columns[indexColumn]}`)
             break;
         case 'queenwhite':
-            console.log(piece)
+            let moveqW = {
+                move1 :  strainght_line(indexColumn),
+                move2 :  horizon_lines(indexRow),
+                move3 :  move_axis_x(indexRow, indexColumn),
+                move4 :  move_axis_w(indexRow, indexColumn),
+                move5 :  move_axis_z(indexRow, indexColumn),
+                move6 :  move_axis_y(indexRow, indexColumn)}
+            bigger_Moves(moveqW, 'queenwhite', 'white', `${rows[indexRow]}${columns[indexColumn]}`)
             break;
         case 'queendark':
-            console.log(piece)
+            let moveqB = {
+                move1 :  strainght_line(indexColumn),
+                move2 :  horizon_lines(indexRow),
+                move3 :  move_axis_x(indexRow, indexColumn),
+                move4 :  move_axis_w(indexRow, indexColumn),
+                move5 :  move_axis_z(indexRow, indexColumn),
+                move6 :  move_axis_y(indexRow, indexColumn)}
+            bigger_Moves(moveqB, 'queendark', 'dark', `${rows[indexRow]}${columns[indexColumn]}`)
             break;
         case 'kingwhite':
-            console.log(piece)
+            let movekW = {
+                move1: `${rows[indexRow+1]}${columns[indexColumn]}`,
+                move2: `${rows[indexRow+1]}${columns[indexColumn+1]}`,
+                move3: `${rows[indexRow]}${columns[indexColumn+1]}`,
+                move4: `${rows[indexRow-1]}${columns[indexColumn+1]}`,
+                move5: `${rows[indexRow-1]}${columns[indexColumn]}`,
+                move6: `${rows[indexRow-1]}${columns[indexColumn-1]}`,
+                move7: `${rows[indexRow]}${columns[indexColumn-1]}`,
+                move8: `${rows[indexRow+1]}${columns[indexColumn-1]}`
+            }
+            let position_test_kingWhite = scan(movekW)
+            return position_test_kingWhite
             break;
         case 'kingdark':
-            console.log(piece)
+            let movekB = {
+                move1: `${rows[indexRow+1]}${columns[indexColumn]}`,
+                move2: `${rows[indexRow+1]}${columns[indexColumn+1]}`,
+                move3: `${rows[indexRow]}${columns[indexColumn+1]}`,
+                move4: `${rows[indexRow-1]}${columns[indexColumn+1]}`,
+                move5: `${rows[indexRow-1]}${columns[indexColumn]}`,
+                move6: `${rows[indexRow-1]}${columns[indexColumn-1]}`,
+                move7: `${rows[indexRow]}${columns[indexColumn-1]}`,
+                move8: `${rows[indexRow+1]}${columns[indexColumn-1]}`
+            }
+            let position_test_kingBlack = scan(movekB)
+            return position_test_kingBlack
             break;
         default:
             console.log("erro404")
@@ -92,7 +148,6 @@ function scan(moves){
             }
         }
     }
-    console.log(tested)
     return tested
 }
 function is_empty(objt){
@@ -105,4 +160,101 @@ function is_empty(objt){
     }else{
         return false
     }
+}
+function strainght_line(indexColumn){
+    let i = 1
+    let row_test = {}
+    for (let row in rows){
+        row_test[`move${i}`] = `${rows[row]}${columns[indexColumn]}`
+        i ++
+    }
+    let tested = scan(row_test)
+    return tested
+}
+function horizon_lines(indexRow){
+    let i = 1
+    let column_test = {}
+    for (let column in columns){
+        column_test[`move${i}`] = `${rows[indexRow]}${i}`
+        i ++ 
+    }
+    let tested = scan(column_test)
+    return tested
+}
+function move_axis_x(indexRow, indexColumn){
+    let i = 1
+    let axis_x_test = {}
+    let column_axy_x = columns[indexColumn]
+    let column_number = Number(column_axy_x)
+    for (let row in rows){
+        axis_x_test[`move${i}`] = `${rows[indexRow]}${column_number}`
+        column_number += 1 
+        indexRow += 1
+        i ++
+        if (column_number > 9){
+            break
+        }
+    }
+    let tested = scan(axis_x_test)
+    return tested
+
+}
+function move_axis_w(indexRow, indexColumn){
+    let i = 1
+    let axis_w_test = {}
+    let column_axy_w = indexColumn
+    let column_number = Number(column_axy_w)
+    indexRow += 1
+    for (let row in rows){
+        axis_w_test[`move${i}`] = `${rows[indexRow]}${column_number}`
+        column_number -= 1
+        indexRow += 1 
+        i ++
+        if (column_number == 0){
+            break
+        }
+    }
+    let tested = scan(axis_w_test)
+    return tested
+}
+function move_axis_z(indexRow, indexColumn){
+    let i = 1
+    let axis_z_test = {}
+    let column_axy_z = indexColumn+1
+    let column_number = Number(column_axy_z)
+    for (let row in rows){
+        axis_z_test[`move${i}`] = `${rows[indexRow]}${column_number}`
+        column_number += 1
+        indexRow -= 1 
+        i ++
+        if (column_number == 0){
+            break
+        }
+    }
+    let tested = scan(axis_z_test)
+    return tested
+}
+function move_axis_y(indexRow, indexColumn){
+    let i = 1
+    let axis_y_test = {}
+    let column_axy_y = indexColumn
+    let column_number = Number(column_axy_y)
+    indexRow -= 1 
+    for (let row in rows){
+        axis_y_test[`move${i}`] = `${rows[indexRow]}${column_number}`
+        column_number -= 1
+        indexRow -= 1 
+        i ++
+        if (column_number == 0){
+            break
+        }
+    }
+    let tested = scan(axis_y_test)
+    return tested
+}
+function bigger_Moves(moves, pieces, color, position){
+    for (let prop in moves){
+        let provi_moves = moves[prop]
+        render_possibiltys(provi_moves, pieces, color, position, true)
+    }    
 }
