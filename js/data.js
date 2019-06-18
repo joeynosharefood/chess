@@ -1,154 +1,59 @@
-function dataEntry(pos, piece){
+var kingwhite = ''
+var kingdark = ''
+function dataEntry(pos, color, test=true){
+    if (test == true){
+        historic_data(pos, color)
+    }
+    switch (color) {
+        case 'kingwhite':
+            kingwhite = pos
+            break;
+        case 'kingdark':
+            kingdark = pos
+        default:
+            break;
+    }
     let row = pos[0]
     let column = pos[1]-1
-    chessBoard[row][column] = `${piece}`
+    if (color.indexOf('white') != -1){
+        chessBoard[row][column] = 'white'
+    }else{
+        chessBoard[row][column] = 'dark'
+    }
 }
 function dataRemove(pos){
     let row = pos[0]
     let column = pos[1]-1
     chessBoard[row][column] = ''
 }
-function piece_per_piece(piece, indexRow, indexColumn){
-    switch (piece) {
-        case 'pawnwhite':
-            let move_pW = {
-                move1: `${rows[indexRow+1]}`+`${columns[indexColumn]}`,
-                move2: `${rows[indexRow+2]}`+`${columns[indexColumn]}`
-            }
-            let position_test_pW = scan(move_pW)
-            return position_test_pW
-            break;
-        case 'pawndark':
-            let move_pB = {
-                move1: `${rows[indexRow-1]}`+`${columns[indexColumn]}`,
-                move2: `${rows[indexRow-2]}`+`${columns[indexColumn]}`
-            }
-            let position_test_pB = scan(move_pB)
-            return position_test_pB
-            break; 
-        case 'knightwhite':
-            let move_kW = {
-                move1: `${rows[indexRow+2]}`+`${columns[indexColumn+1]}`,
-                move2: `${rows[indexRow+2]}`+`${columns[indexColumn-1]}`, 
-                move3: `${rows[indexRow-1]}`+`${columns[indexColumn+2]}`,
-                move4: `${rows[indexRow+1]}`+`${columns[indexColumn+2]}`,
-                move5: `${rows[indexRow-2]}`+`${columns[indexColumn+1]}`,
-                move6: `${rows[indexRow-2]}`+`${columns[indexColumn-1]}`,
-                move7: `${rows[indexRow-1]}`+`${columns[indexColumn-2]}`,
-                move8: `${rows[indexRow+1]}`+`${columns[indexColumn-2]}`
-            }
-            let position_test_kW = scan(move_kW)
-            return position_test_kW
-            break;
-        case 'knightdark':
-            let move_kB = {
-                move1: `${rows[indexRow+2]}`+`${columns[indexColumn+1]}`,
-                move2: `${rows[indexRow+2]}`+`${columns[indexColumn-1]}`, 
-                move3: `${rows[indexRow-1]}`+`${columns[indexColumn+2]}`,
-                move4: `${rows[indexRow+1]}`+`${columns[indexColumn+2]}`,
-                move5: `${rows[indexRow-2]}`+`${columns[indexColumn+1]}`,
-                move6: `${rows[indexRow-2]}`+`${columns[indexColumn-1]}`,
-                move7: `${rows[indexRow-1]}`+`${columns[indexColumn-2]}`,
-                move8: `${rows[indexRow+1]}`+`${columns[indexColumn-2]}`
-            }
-            let position_test_kB = scan(move_kB)
-            return position_test_kB
-            break;
-        case 'bishopwhite':
-            let movebW = {
-                move3 :  move_axis_x(indexRow, indexColumn),
-                move4 :  move_axis_w(indexRow, indexColumn),
-                move5 :  move_axis_z(indexRow, indexColumn),
-                move6 :  move_axis_y(indexRow, indexColumn)}
-            bigger_Moves(movebW, 'bishopwhite', 'white', `${rows[indexRow]}${columns[indexColumn]}`)
-            break;
-        case 'bishopdark':
-            let movebB = {
-                move3 :  move_axis_x(indexRow, indexColumn),
-                move4 :  move_axis_w(indexRow, indexColumn),
-                move5 :  move_axis_z(indexRow, indexColumn),
-                move6 :  move_axis_y(indexRow, indexColumn)}
-            bigger_Moves(movebB, 'bishopdark', 'dark', `${rows[indexRow]}${columns[indexColumn]}`)
-            break;    
-        case 'rookwhite':
-            let moverW = {
-                move1 :  strainght_line(indexColumn),
-                move2 :  horizon_lines(indexRow),}
-            bigger_Moves(moverW, 'rookwhite', 'white', `${rows[indexRow]}${columns[indexColumn]}`)
-            break;
-        case 'rookdark':
-            console.log('1')
-            let moverB = {
-                move1 :  strainght_line(indexColumn),
-                move2 :  horizon_lines(indexRow),}
-            bigger_Moves(moverB, 'rookdark', 'dark', `${rows[indexRow]}${columns[indexColumn]}`)
-            break;
-        case 'queenwhite':
-            let moveqW = {
-                move1 :  strainght_line(indexColumn),
-                move2 :  horizon_lines(indexRow),
-                move3 :  move_axis_x(indexRow, indexColumn),
-                move4 :  move_axis_w(indexRow, indexColumn),
-                move5 :  move_axis_z(indexRow, indexColumn),
-                move6 :  move_axis_y(indexRow, indexColumn)}
-            bigger_Moves(moveqW, 'queenwhite', 'white', `${rows[indexRow]}${columns[indexColumn]}`)
-            break;
-        case 'queendark':
-            let moveqB = {
-                move1 :  strainght_line(indexColumn),
-                move2 :  horizon_lines(indexRow),
-                move3 :  move_axis_x(indexRow, indexColumn),
-                move4 :  move_axis_w(indexRow, indexColumn),
-                move5 :  move_axis_z(indexRow, indexColumn),
-                move6 :  move_axis_y(indexRow, indexColumn)}
-            bigger_Moves(moveqB, 'queendark', 'dark', `${rows[indexRow]}${columns[indexColumn]}`)
-            break;
-        case 'kingwhite':
-            let movekW = {
-                move1: `${rows[indexRow+1]}${columns[indexColumn]}`,
-                move2: `${rows[indexRow+1]}${columns[indexColumn+1]}`,
-                move3: `${rows[indexRow]}${columns[indexColumn+1]}`,
-                move4: `${rows[indexRow-1]}${columns[indexColumn+1]}`,
-                move5: `${rows[indexRow-1]}${columns[indexColumn]}`,
-                move6: `${rows[indexRow-1]}${columns[indexColumn-1]}`,
-                move7: `${rows[indexRow]}${columns[indexColumn-1]}`,
-                move8: `${rows[indexRow+1]}${columns[indexColumn-1]}`
-            }
-            let position_test_kingWhite = scan(movekW)
-            return position_test_kingWhite
-            break;
-        case 'kingdark':
-            let movekB = {
-                move1: `${rows[indexRow+1]}${columns[indexColumn]}`,
-                move2: `${rows[indexRow+1]}${columns[indexColumn+1]}`,
-                move3: `${rows[indexRow]}${columns[indexColumn+1]}`,
-                move4: `${rows[indexRow-1]}${columns[indexColumn+1]}`,
-                move5: `${rows[indexRow-1]}${columns[indexColumn]}`,
-                move6: `${rows[indexRow-1]}${columns[indexColumn-1]}`,
-                move7: `${rows[indexRow]}${columns[indexColumn-1]}`,
-                move8: `${rows[indexRow+1]}${columns[indexColumn-1]}`
-            }
-            let position_test_kingBlack = scan(movekB)
-            return position_test_kingBlack
-            break;
-        default:
-            console.log("erro404")
-            break;
+function scan(moves, color, pos){
+    let piece_color = ''
+    if (color.indexOf('white') != -1){
+        piece_color = 'white'
+    }else if (color.indexOf('dark') != -1){
+        piece_color = 'dark'
     }
-}
-function scan(moves){
-    let tested = {}
-    for (let mov in moves){
-        let moviment_test = moves[mov]
-        let row = moviment_test[0]
-        let column = moviment_test[1]
-        if (row != 'u' && column != 'u' && moviment_test != 'undefinedundefined'){
+    let moves_possibilyts
+    let cont_mov = 1 
+    let row = moves[0]
+    let column = moves[1]
+    if (row != 'u' && column != 'u' && moves != 'undefinedundefined'){
+        test = false
+        if (chessBoard[row][column-1] == '' && chessBoard[row][column-1] != piece_color){
             if (chessBoard[row][column-1] == ''){
-                tested[mov] = moves[mov]
+                test = true
+                moves_possibilyts = `${moves}`
+                cont_mov += 1
             }
         }
+    }else{
+        test = false
     }
-    return tested
+    if (test == true){
+        render_possibiltys(moves_possibilyts, color, piece_color, pos)
+    }else{
+        return false
+    }    
 }
 function is_empty(objt){
     let len = 0
@@ -161,100 +66,59 @@ function is_empty(objt){
         return false
     }
 }
-function strainght_line(indexColumn){
-    let i = 1
-    let row_test = {}
-    for (let row in rows){
-        row_test[`move${i}`] = `${rows[row]}${columns[indexColumn]}`
-        i ++
+function big_moves(move, piece, pos){
+    let piece_color = ''
+    if (piece.indexOf('white') != -1){
+        piece_color = 'white'
+    }else if (piece.indexOf('dark') != -1){
+        piece_color = 'dark'
     }
-    let tested = scan(row_test)
-    return tested
-}
-function horizon_lines(indexRow){
-    let i = 1
-    let column_test = {}
-    for (let column in columns){
-        column_test[`move${i}`] = `${rows[indexRow]}${i}`
-        i ++ 
-    }
-    let tested = scan(column_test)
-    return tested
-}
-function move_axis_x(indexRow, indexColumn){
-    let i = 1
-    let axis_x_test = {}
-    let column_axy_x = columns[indexColumn]
-    let column_number = Number(column_axy_x)
-    for (let row in rows){
-        axis_x_test[`move${i}`] = `${rows[indexRow]}${column_number}`
-        column_number += 1 
-        indexRow += 1
-        i ++
-        if (column_number > 9){
+    opost_color = piece_color == 'white' ? 'dark' : 'white'
+    for (let moves in move){
+        let moviment = move[moves]
+        let row = moviment[0]
+        let column = moviment[1]
+        if (row != 'u' && column != 'u' && moves != 'undefinedundefined'){
+            if (chessBoard[row][column-1] == '' && chessBoard[row][column-1] != piece_color){
+                if (chessBoard[row][column-1] == ''){
+                    scan(moviment, piece, pos)
+                }else{
+                    break
+                }
+            }else if (chessBoard[row][column-1] == opost_color){
+                eat_moves(moviment, piece, pos)
+                break
+            }
+            else{
+                break
+            }
+        }else{
             break
         }
     }
-    let tested = scan(axis_x_test)
-    return tested
-
 }
-function move_axis_w(indexRow, indexColumn){
-    let i = 1
-    let axis_w_test = {}
-    let column_axy_w = indexColumn
-    let column_number = Number(column_axy_w)
-    indexRow += 1
-    for (let row in rows){
-        axis_w_test[`move${i}`] = `${rows[indexRow]}${column_number}`
-        column_number -= 1
-        indexRow += 1 
-        i ++
-        if (column_number == 0){
-            break
-        }
+function eat_moves(moves, piece, position){
+    let color
+    if (piece.indexOf('white') != -1){
+        color = 'white'
+    }else if (piece.indexOf('dark') != -1){
+        color = 'dark'
     }
-    let tested = scan(axis_w_test)
-    return tested
-}
-function move_axis_z(indexRow, indexColumn){
-    let i = 1
-    let axis_z_test = {}
-    let column_axy_z = indexColumn+1
-    let column_number = Number(column_axy_z)
-    for (let row in rows){
-        axis_z_test[`move${i}`] = `${rows[indexRow]}${column_number}`
-        column_number += 1
-        indexRow -= 1 
-        i ++
-        if (column_number == 0){
-            break
-        }
+    sheik(moves, piece)
+    if (turn == color){
+        let img  = `<img src='../img/eat-box.png' class='eat-box' onclick='eat("${moves}", "${piece}"); add_class_remove("${position}")'>`
+        document.getElementById(`square-${moves}`).innerHTML += img
+    }else{
+        return false
     }
-    let tested = scan(axis_z_test)
-    return tested
 }
-function move_axis_y(indexRow, indexColumn){
-    let i = 1
-    let axis_y_test = {}
-    let column_axy_y = indexColumn
-    let column_number = Number(column_axy_y)
-    indexRow -= 1 
-    for (let row in rows){
-        axis_y_test[`move${i}`] = `${rows[indexRow]}${column_number}`
-        column_number -= 1
-        indexRow -= 1 
-        i ++
-        if (column_number == 0){
-            break
-        }
-    }
-    let tested = scan(axis_y_test)
-    return tested
+function eat(moves, piece){
+    dataEntry(`${moves}`, `${piece}`)
+    let new_position = `<img src="../img/${piece}.png" class="${piece} ${moves}" onclick="clean_box(); piece_per_piece('${piece}', '${moves}')">`
+    document.getElementById(`square-${moves}`).innerHTML = new_position
+    change_turn()
 }
-function bigger_Moves(moves, pieces, color, position){
-    for (let prop in moves){
-        let provi_moves = moves[prop]
-        render_possibiltys(provi_moves, pieces, color, position, true)
-    }    
+function historic_data(pos, color){
+    let opt = `<option value="play-${pos}">${color} na ${pos}</option>`
+    document.getElementById('historic').innerHTML += opt
 }

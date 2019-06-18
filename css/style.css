@@ -13,7 +13,7 @@ body{
     background: white;
 }
 .box {
-    border: 2px solid rgba(177, 135, 83, 0.452);
+    border: 2px solid white;
     width: 80px;
     height: 80px;
     float: left;
@@ -32,8 +32,8 @@ body{
     background: white;
     float: left;
 }
-.dark{background:#B18753;}
-.light{background:#FFFFE8;}
+.dark{background:url("../img/darkback.png");}
+.light{background:url("../img/whiteback.png");}
 .button{
     background-color: #555555;
     border: none;
@@ -75,4 +75,19 @@ body{
     float: left;
     clear: right;
     width: 80px;
+}
+.select-box{
+    position: relative;
+    top: 3px;
+}
+.eat-box{
+    position: relative;
+    top: -60px;
+}
+#historic{
+    width: 350px;
+    height: 500px;
+    position: relative;
+    top: 30px;
+    left: 25px;
 }

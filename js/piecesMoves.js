@@ -1,57 +1,31 @@
 const rows = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
 const columns = ['1', '2', '3', '4', '5', '6', '7', '8']
 var turn = 'white'
-function scanner(piece, pos){
-    let row = pos[0]
-    let column = pos[1]
-    let indexRow = rows.indexOf(row)
-    let indexColumn = columns.indexOf(column)
-    switch (piece) {
-        case 'pawnwhite':
-            let pawnwhite = piece_per_piece(piece, indexRow, indexColumn)        
-            render_possibiltys(pawnwhite, piece, 'white', pos)
-            break;
-        case 'pawndark':
-            let pawndark = piece_per_piece(piece, indexRow, indexColumn)
-            render_possibiltys(pawndark, piece, 'dark', pos)
-            break; 
-        case 'knightwhite':
-            let knightwhite = piece_per_piece(piece, indexRow, indexColumn)
-            render_possibiltys(knightwhite, piece, 'white', pos)  
-            break;
-        case 'knightdark':
-            let knightdark = piece_per_piece(piece, indexRow, indexColumn)   
-            render_possibiltys(knightdark, piece, 'dark', pos) 
-            break;
-        case 'kingwhite':
-            let kingwhite = piece_per_piece(piece, indexRow, indexColumn)   
-            render_possibiltys(kingwhite, piece, 'white', pos) 
-            break;
-        case 'kingdark':
-            let kingdark = piece_per_piece(piece, indexRow, indexColumn)   
-            render_possibiltys(kingdark, piece, 'dark', pos) 
-            break;
-        default:
-            console.log(piece)  
-            piece_per_piece(piece, indexRow, indexColumn)
-            break;
-    } 
-}
 function render_possibiltys(moves, piece, color, position){
     if (color == turn){
-        for (let mov in moves){
-            let select_box = `<img src="../img/select-box.png" class='select-box' id='select-box'onclick="moviment('${moves[mov]}', '${piece}'); add_class_remove('${position}')">`
-            document.getElementById(`square-${moves[mov]}`).innerHTML = select_box
-        }
+        let select_box = `<img src="../img/select-box.png" class='select-box' id='select-box' onclick="moviment('${moves}', '${piece}'); add_class_remove('${position}')">`
+        document.getElementById(`square-${moves}`).innerHTML = select_box 
     }else{
         return false
     }
 }
 function moviment(move, piece){
-    dataEntry(`${move}`, `${piece}`)
-    let new_position = `<img src="../img/${piece}.png" class="${piece} ${move}" onclick="clean_box(); scanner('${piece}', '${move}')">`
-    document.getElementById(`square-${move}`).innerHTML = new_position
-    change_turn()
+    if (piece.indexOf('white') != -1){
+        color = 'white'
+    }else{
+        color = 'dark'
+    }
+    if (piece == 'pawnwhite' || piece == 'pawndark'){
+        dataEntry(`${move}`, `${piece}`)
+        let new_position = `<img src="../img/${piece}.png" class="${piece} ${move}" onclick="clean_box(); piece_per_piece('${piece}', '${move}', false)">`
+        document.getElementById(`square-${move}`).innerHTML = new_position
+        change_turn()
+    }else{
+        dataEntry(`${move}`, `${piece}`)
+        let new_position = `<img src="../img/${piece}.png" class="${piece} ${move}" onclick="clean_box(); piece_per_piece('${piece}', '${move}')">`
+        document.getElementById(`square-${move}`).innerHTML = new_position
+        change_turn()
+    }
 }
 function change_turn(){
     turn = turn == 'white' ? 'dark': 'white'
@@ -64,6 +38,7 @@ function add_class_remove(position){
     let body = document.querySelector('body')
     for (let child in body){
         $('.select-box').remove()
+        $('.eat-box').remove()
     }
 }
 function clean_box(){
@@ -71,4 +46,124 @@ function clean_box(){
     for (let child in body){
         $('.select-box').remove()
     }
+}
+function strainght_line_up(indexRow, indexColumn, piece){
+    let i = 1
+    let row_test = {}
+    indexRow += 1
+    for (let row in rows){
+        row_test[`move${i}`] = `${rows[indexRow]}${columns[indexColumn]}`
+        indexRow += 1
+        i ++
+    }
+    return row_test
+}
+function strainght_line_down(indexRow, indexColumn, piece){
+    let i = 1
+    let row_test = {}
+    indexRow -= 1
+    for (let row in rows){
+        row_test[`move${i}`] = `${rows[indexRow]}${columns[indexColumn]}`
+        indexRow -= 1
+        i ++
+    }
+    return row_test
+}
+function horizon_lines_right(indexRow, indexColumn, piece){
+    let i = 1
+    let column_test = {}
+    let test_stp = Number(columns[indexColumn])
+    indexColumn += 1
+    for (let column in columns){
+        column_test[`move${i}`] = `${rows[indexRow]}`+`${columns[indexColumn]}`
+        indexColumn += 1 
+        i ++
+    }
+    return column_test
+}
+function horizon_lines_left(indexRow, indexColumn, piece){
+    let i = 1
+    let column_test = {}
+    let test_stp = Number(columns[indexColumn])
+    indexColumn -= 1
+    for (let column in columns){
+        column_test[`move${i}`] = `${rows[indexRow]}`+`${columns[indexColumn]}`
+        indexColumn -= 1 
+        i ++
+    }
+    return column_test
+}
+function move_axis_w(indexRow, indexColumn, piece){
+    let i = 1
+    let axis_w_test = {}
+    let column_axy_w = indexColumn
+    let column_number = Number(column_axy_w)
+    indexRow += 1
+    for (let row in rows){
+        axis_w_test[`move${i}`] = `${rows[indexRow]}${column_number}`
+        column_number -= 1
+        indexRow += 1 
+        i ++
+        if (column_number == 0){
+            break
+        }
+    }
+    return axis_w_test
+}
+function move_axis_x(indexRow, indexColumn, piece){
+    let i = 1
+    let axis_x_test = {}
+    let column_axy_x = columns[indexColumn]
+    let column_number = Number(column_axy_x)
+    for (let row in rows){
+        column_number += 1 
+        indexRow += 1
+        axis_x_test[`move${i}`] = `${rows[indexRow]}${column_number}`
+        i ++
+        if (column_number > 9){
+            break
+        }
+    }
+    return axis_x_test
+}
+function move_axis_y(indexRow, indexColumn, piece){
+    let i = 1
+    let axis_y_test = {}
+    let column_axy_y = indexColumn
+    let column_number = Number(column_axy_y)
+    indexRow -= 1 
+    for (let row in rows){
+        axis_y_test[`move${i}`] = `${rows[indexRow]}${column_number}`
+        column_number -= 1
+        indexRow -= 1 
+        i ++
+        if (column_number == 0){
+            break
+        }
+    }
+    return axis_y_test
+}
+function move_axis_z(indexRow, indexColumn, piece){
+    let i = 1
+    let axis_z_test = {}
+    let column_axy_z = indexColumn+1
+    let column_number = Number(column_axy_z)
+    for (let row in rows){
+        column_number += 1
+        indexRow -= 1 
+        axis_z_test[`move${i}`] = `${rows[indexRow]}${column_number}`
+        i ++        
+        if (column_number == 0){
+            break
+        }
+    }
+    return axis_z_test
+}
+function sheik(moves, piece){
+    if (moves == kingdark || moves == kingwhite){
+        alert('Xeque')
+    }
+}
+function checkMate(){
+    alert('Xeque-Mate')
 }

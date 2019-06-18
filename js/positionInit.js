@@ -43,16 +43,16 @@ function init(){
         config()
     }else{
         for (let pos in initPosition){
-            dataEntry(`${pos}`, `${initPosition[pos]}`)
-            let img = `<img src="../img/${initPosition[pos]}.png" class="${initPosition[pos]} ${[pos]}" onclick="clean_box(); scanner('${initPosition[pos]}', '${pos}')">`
+            dataEntry(`${pos}`, `${initPosition[pos]}`, false)
+            let img = `<img src="../img/${initPosition[pos]}.png" class="${initPosition[pos]} ${[pos]}" onclick="clean_box(); piece_per_piece('${initPosition[pos]}', '${pos}')">`
             document.getElementById(`square-${pos}`).innerHTML = img
         }
     }
 }
 function config(){
-    let piece = 'kingdark'
+    let piece = 'queenwhite'
     let position_test = 'e4'
     dataEntry(`${position_test}`, `${piece}`)
-    let img = `<img src='../img/${piece}.png' class ="${piece} ${position_test}" onclick="scanner('${piece}', '${position_test}')">`
+    let img = `<img src='../img/${piece}.png' class ="${piece} ${position_test}" onclick="piece_per_piece('${piece}', '${position_test}')">`
     document.getElementById(`square-${position_test}`).innerHTML = img
 }
